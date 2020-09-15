@@ -1,0 +1,26 @@
+{
+  "name": "lucasfoulkes.github.io",
+  "version": "1.0.0",
+  "description": "Personal portfolio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasFoulkes/lucasfoulkes.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasFoulkes/lucasfoulkes.github.io/issues"
+  },
+  "homepage": "https://github.com/LucasFoulkes/lucasfoulkes.github.io#readme",
+  "dependencies": {
+    "dat.gui": "^0.7.7",
+    "fullpage.js": "^3.0.9",
+    "nodemon": "^2.0.4",
+    "smooth-scrollbar": "^8.5.2"
+  }
+}

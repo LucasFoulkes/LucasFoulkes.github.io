@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  font-family: "Roboto Mono", monospace;
+  background: #121212;
+  overflow: hidden;
+}
+
+#logo {
+  height: 2em;
+}
+
+#wrapper {
+  margin: 2em 5em;
+  /* padding: 2em 5em; */
+}
+nav {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  float: right;
+  padding: 0.5em 1.5em;
+}
+nav a:first-child {
+  float: left;
+}
+
+nav a:nth-child(2) {
+  font-weight: bold;
+  background: white;
+  color: #0085ff;
+  border-radius: 5em;
+  border-bottom: 0.3em solid #0085ff;
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  position: relative;
+}
+
+nav a:nth-child(2):hover {
+  border-bottom-width: 0 !important;
+  top: 0.2em !important;
+}
+
+.landing {
+  background: #121212;
+}
+
+.services {
+  background: #2e05e9;
+}
+.diseno {
+  background: #9f0a00;
+}
+.ecommerce {
+  background: #ffb800;
+}
+.webhosting {
+  background: white;
+}
+.desarrollo {
+  background: #20b85d;
+}
+.ai {
+  background: #330034;
+}
+.contacto {
+  background: #121212;
+}
+
+span {
+  background: white !important;
+  opacity: 0.5;
+}

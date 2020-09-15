@@ -1,19 +1,183 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Three.js - Chase and Escape</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.css"
+      integrity="sha512-8M8By+q+SldLyFJbybaHoAPD6g07xyOcscIOQEypDzBS+sTde5d6mlK2ANIZPnSyxZUqJfCNuaIvjBUi8/RS0w=="
+      crossorigin="anonymous"
+    />
+    <title>Lucky Fox Studio</title>
+    <link rel="stylesheet" href="style/main.css" />
   </head>
+  <body id="body">
+    <nav>
+      <div id="wrapper">
+        <svg
+          id="logo"
+          xmlns="http://www.w3.org/2000/svg"
+          height="345"
+          viewBox="0 0 474 345"
+        >
+          <path
+            d="M100.724 7.15817C52.3248 20.988 11.9136 56.2851 4.16031 91.5822C-6.17743 138.026 2.75062 179.515 30.9445 216.051C41.0472 228.849 64.0722 249.697 66.4217 247.632C66.8916 247.22 65.7169 241.44 63.3674 234.835C57.7286 217.909 59.8431 194.996 68.0663 180.547C87.5671 146.902 123.279 131.42 176.848 133.485C201.987 134.31 204.337 134.723 223.367 142.98C234.645 147.521 249.682 155.571 257.2 160.731C264.483 165.892 272.237 170.02 274.351 170.02C279.285 170.02 289.153 159.699 294.557 148.759C302.31 133.485 305.13 118.829 303.72 102.109C300.665 63.5096 277.171 36.0564 228.536 14.3827C202.457 2.82344 190.71 0.759277 151.943 0.759277C125.629 0.965698 119.99 1.58495 100.724 7.15817ZM208.331 28.6254C240.519 39.7718 261.194 55.6658 273.177 78.578C283.044 97.3618 282.809 127.705 272.942 139.677C269.887 142.98 268.478 142.567 252.501 132.865C233.94 121.512 208.331 113.462 184.131 111.192C174.498 110.16 170.504 108.921 170.504 106.857C170.504 105.206 178.492 96.7426 188.125 87.8667L205.511 71.7663L201.282 65.5738C192.119 52.1568 170.739 39.9783 144.19 32.5473C129.153 28.419 127.273 26.3548 137.141 24.2907C140.665 23.6714 144.66 22.6393 145.834 22.2265C147.244 21.8137 158.287 21.8137 170.504 22.2265C187.655 22.8457 196.583 24.2907 208.331 28.6254Z"
+          />
+          <path
+            d="M351.649 104.38C350.474 107.063 346.715 117.178 343.191 127.085C336.377 146.076 321.81 170.639 306.539 188.185C301.37 194.171 297.846 199.95 298.55 200.982C300.9 204.285 321.81 213.367 334.497 216.67C353.528 221.624 389.006 219.766 413.205 212.542C441.164 204.285 473.587 183.437 473.587 173.529C473.587 170.02 472.412 169.814 462.544 171.258C456.201 172.291 443.044 172.91 432.941 172.703C401.928 171.878 384.072 161.97 371.384 138.851C367.39 131.214 362.456 119.448 360.812 112.43C357.757 99.2194 354.938 96.9488 351.649 104.38Z"
+          />
+          <path
+            d="M390.416 110.779C379.139 120.274 377.024 126.466 382.193 135.549C385.717 141.741 398.639 153.507 401.694 153.507C403.338 153.507 404.278 144.424 404.278 127.705C404.278 113.462 403.573 101.903 402.868 101.903C402.164 101.903 396.525 105.825 390.416 110.779Z"
+          />
+          <path
+            d="M236.525 287.264C230.182 295.108 223.133 312.653 219.844 327.928C217.729 338.868 217.964 340.519 221.489 342.996C223.838 344.441 227.127 345.06 228.772 344.441C230.652 343.822 233.236 343.409 234.881 343.409C236.525 343.409 243.104 336.597 249.448 328.341C255.791 320.291 264.014 309.97 267.774 305.842C271.298 301.713 273.647 297.379 272.942 296.14C270.828 293.457 253.442 284.374 246.393 282.723C242.634 281.691 240.284 282.723 236.525 287.264Z"
+          />
+          <path
+            d="M53.03 289.741C42.4573 299.03 34.4691 323.8 37.7583 337.01C38.9331 342.377 40.3428 343.409 45.7466 343.409C51.3854 343.409 53.9698 341.139 62.4279 329.786L72.5307 316.162L67.1269 302.332C60.3134 285.2 59.3736 284.168 53.03 289.741Z"
+          />
+          <path
+            d="M130.562 167.543C100.959 176.212 83.3375 192.932 75.1143 220.592C66.4212 248.871 79.1084 297.172 104.013 331.231C112.941 343.203 113.176 343.409 124.219 343.409C136.906 343.409 136.906 343.616 131.502 323.387C126.333 304.19 128.213 287.058 136.671 273.021C142.31 263.733 145.599 260.843 157.111 255.889C180.841 245.362 217.728 246.394 244.512 258.159C264.718 267.242 275.525 274.879 311.003 305.016C354.938 342.171 356.818 343.409 373.499 343.409C393 343.409 392.765 340.313 372.089 320.91C362.456 312.034 349.534 299.03 343.191 291.805C270.357 211.303 244.512 188.185 210.915 172.91C194.233 165.272 192.119 164.86 168.389 164.447C149.358 164.034 140.43 164.653 130.562 167.543Z"
+          />
+        </svg>
+        <a href="">Contacto</a>
+        <a href="">Servicios</a>
+      </div>
+    </nav>
+    <div id="fullpage">
+      <div class="section landing">
+        <div id="WebGL-output"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.min.js"></script>
+      </div>
+      <div class="section services"></div>
+      <div class="section diseno"></div>
+      <div class="section ecommerce"></div>
+      <div class="section webhosting"></div>
+      <div class="section desarrollo"></div>
+      <div class="section ai"></div>
+      <div class="section contacto"></div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.js"
+      integrity="sha512-Gx/C4x1qubng2MWpJIxTPuWch9O88dhFFfpIl3WlqH0jPHtCiNdYsmJBFX0q5gIzFHmwkPzzYTlZC/Q7zgbwCw=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/vendors/easings.js"
+      integrity="sha512-FFmLOg/pFlqTgDEWhqL3zxfLRRjv54Dx170T9CgCiTx4+iVVEMPXku6egqJ9wau9y9ORJIaPFuLYR3nsFBm5uQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.extensions.min.js"
+      integrity="sha512-pci5WG2+7QnpsinWWpGUd3RgI61fU1bWlQQQegC2mVqwOQC/+Xp0ROGO0AYB6dvoLBYRxwm+t+DWOVRkxmlcdQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function assign(args) {
+        document.querySelector("nav a:nth-child(2)").style.color = args[0];
+        document.querySelector("nav a:nth-child(2)").style.background = args[1];
+        document.querySelector("nav a:nth-child(2)").style.borderBottom =
+          args[2];
+        document.querySelector("nav a:nth-child(3)").style.color = args[3];
+        document.querySelector("svg").style.fill = args[4];
+      }
+      assign(["#0085ff", "white", "0.3em solid #0085ff", "white", "#0085ff"]);
+      new fullpage("#fullpage", {
+        autoscrolling: true,
+        dragAndMove: "vertical",
+        navigation: true,
+        css3: false,
+        scrollingSpeed: 850,
+        // scrollingSpeed: 500,
+        easing: "easeInQuart",
+        easing: "easeOutBack",
+        // easing: "easeInOutBack",
+        // easing: "easeInOutQuart",
 
-  <body>
-    <div id="WebGL-output"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.min.js"></script>
-    <script src="scripts/section.js"></script>
+        onLeave: function (origin, destination, direction) {
+          var leavingSection = this;
+          switch (destination.index) {
+            case 0:
+              assign([
+                "#0085ff",
+                "white",
+                "0.3em solid #0085ff",
+                "white",
+                "#0085ff",
+              ]);
+              break;
+            case 1:
+              assign([
+                "#34D1B6",
+                "white",
+                "0.3em solid #34D1B6",
+                "white",
+                "#34D1B6",
+              ]);
+              break;
+            case 2:
+              assign([
+                "#FF0000",
+                "white",
+                "0.3em solid #FF0000",
+                "white",
+                "#FF0000",
+              ]);
+              break;
+            case 3:
+              assign([
+                "#FFE55C",
+                "black",
+                "0.3em solid #FFE55C",
+                "black",
+                "black",
+              ]);
+              break;
+            case 4:
+              assign([
+                "white",
+                "#0085ff",
+                "0.3em solid black",
+                "black",
+                "#0085ff",
+              ]);
+              break;
+            case 5:
+              assign([
+                "#34D1B6",
+                "white",
+                "0.3em solid #34D1B6",
+                "white",
+                "white",
+              ]);
+              break;
+            case 6:
+              assign([
+                "#FF0000",
+                "white",
+                "0.3em solid #FF0000",
+                "white",
+                "#FF0000",
+              ]);
+              break;
+            case 7:
+              assign([
+                "#0085ff",
+                "white",
+                "0.3em solid #0085ff",
+                "white",
+                "#0085ff",
+              ]);
+              break;
+          }
+        },
+      });
+    </script>
+
+    <script type="module" src="scripts/section.js"></script>
   </body>
 </html>

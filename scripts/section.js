@@ -1,3 +1,13 @@
+import { EffectComposer } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/ShaderPass.js";
+
+import { RGBShiftShader } from "/scripts/three.js-master/three.js-master/examples/jsm/shaders/RGBShiftShader.js";
+import { DotScreenShader } from "/scripts/three.js-master/three.js-master/examples/jsm/shaders/DotScreenShader.js";
+
+var camera, composer;
+var object, light;
+
 class DustParticles {
   constructor(num = 10) {
     this.num = num;
@@ -5,7 +15,7 @@ class DustParticles {
     for (let i = 0; i < this.num; i++) {
       const size = getRandomNum(800, 100);
       const geometory = new THREE.BoxGeometry(size, size, size);
-      const color = 0xffa133;
+      const color = 0x2e05e9;
       const material = new THREE.MeshLambertMaterial({
         opacity: 1.0,
         wireframe: false,
@@ -256,10 +266,13 @@ class Escaper {
     const geometry = new THREE.CylinderGeometry(1, 24, 60, 12);
     geometry.rotateX(THREE.Math.degToRad(90));
     //const color = new THREE.Color(`hsl(${getRandomNum(360)}, 100%, 50%)`);
-    const color = new THREE.Color(0x93deff);
-    const material = new THREE.MeshLambertMaterial({
+    // const color = new THREE.Color(0xffffff);
+    const color = new THREE.Color(0xffa133);
+    const material = new THREE.MeshStandardMaterial({
       wireframe: false,
       color: color,
+      metalnes: 1,
+      roughnes: 0.1,
     });
 
     this.mesh = new THREE.Mesh(geometry, material);
@@ -537,9 +550,13 @@ class ChaseCamera {
 }
 
 const colorPalette = {
-  screenBg: 0xf1f1f1,
+  screenBg: 0x121212,
   ambientLight: 0x777777,
-  directionalLight: 0xffffff,
+  // ambientLight: 0xffff00,
+  // directionalLight: 0xffff00, // yellow
+  // directionalLight: 0xffa500, // orange
+  // directionalLight: 0xff0000, // red
+  directionalLight: 0xffffff, // white
 };
 
 const getRandomNum = (max = 0, min = 0) =>
@@ -547,7 +564,7 @@ const getRandomNum = (max = 0, min = 0) =>
 const chasers = [];
 let chaserGroup;
 let offsetPhase = getRandomNum(100, 0);
-currentCameraWork = "zoomInOut";
+let currentCameraWork = "zoomInOut";
 
 const render = () => {
   /* bellwether
@@ -605,6 +622,7 @@ const render = () => {
   /* renderer
                                                       ------------------------------------ */
   renderer.render(scene, chaseCamera.camera);
+
   requestAnimationFrame(render);
 };
 
@@ -684,6 +702,21 @@ const directionalLight = new THREE.DirectionalLight(
 );
 directionalLight.position.set(20000, 20000, 2000);
 scene.add(directionalLight);
+
+// postprocessing
+
+composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+var effect = new ShaderPass(DotScreenShader);
+effect.uniforms["scale"].value = 4;
+composer.addPass(effect);
+
+var effect = new ShaderPass(RGBShiftShader);
+effect.uniforms["amount"].value = 0.0015;
+composer.addPass(effect);
+
+//
 
 /* resize
                                -------------------------------------------------------------*/

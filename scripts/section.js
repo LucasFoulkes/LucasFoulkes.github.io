@@ -1,12 +1,15 @@
+import * as THREE from "/scripts/three.js-master/three.js-master/build/three.module.js";
+
 import { EffectComposer } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/ShaderPass.js";
 
 import { RGBShiftShader } from "/scripts/three.js-master/three.js-master/examples/jsm/shaders/RGBShiftShader.js";
 import { DotScreenShader } from "/scripts/three.js-master/three.js-master/examples/jsm/shaders/DotScreenShader.js";
+import { AfterimagePass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/AfterimagePass.js";
+import { UnrealBloomPass } from "/scripts/three.js-master/three.js-master/examples/jsm/postprocessing/UnrealBloomPass.js";
 
-var camera, composer;
-var object, light;
+var composer, camera;
 
 class DustParticles {
   constructor(num = 10) {
@@ -263,16 +266,20 @@ class Bellwether {
 
 class Escaper {
   constructor() {
-    const geometry = new THREE.CylinderGeometry(1, 24, 60, 12);
+    const geometry = new THREE.CylinderGeometry(1, 24, 60, 16);
     geometry.rotateX(THREE.Math.degToRad(90));
     //const color = new THREE.Color(`hsl(${getRandomNum(360)}, 100%, 50%)`);
     // const color = new THREE.Color(0xffffff);
     const color = new THREE.Color(0xffa133);
-    const material = new THREE.MeshStandardMaterial({
+    // const material = new THREE.MeshStandardMaterial({
+    const material = new THREE.MeshLambertMaterial({
       wireframe: false,
       color: color,
-      metalnes: 1,
-      roughnes: 0.1,
+      metalness: 0.9,
+      roughness: 0.5,
+      smoothShadding: true,
+      // emissive: new THREE.Color(0x4f2500),
+      emissive: new THREE.Color(0x321400),
     });
 
     this.mesh = new THREE.Mesh(geometry, material);
@@ -337,10 +344,16 @@ class Escaper {
 
 class Chaser {
   constructor() {
-    const geometry = new THREE.CylinderGeometry(1, 10, 50, 12);
+    const geometry = new THREE.CylinderGeometry(1, 10, 50, 5);
     geometry.rotateX(THREE.Math.degToRad(90));
     const color = new THREE.Color(
-      `hsl(${getRandomNum(360)}, ${0}%, ${getRandomNum(100, 15)}%)`
+      // `hsl(${0x34d1b6}, ${getRandomNum(360)}%, ${getRandomNum(100, 15)}%)`
+      // `hsl(${0x0000ff}, ${getRandomNum(360)}%, ${getRandomNum(100, 15)}%)`
+      // `hsl(${0x0000ff}, ${getRandomNum(180, 0)}%, ${getRandomNum(50, 0)}%)`
+      `hsl(
+        ${getRandomNum(250, 175)}, 
+        ${getRandomNum(100, 50)}%, 
+        ${getRandomNum(40, 20)}%)`
     );
     const material = new THREE.MeshLambertMaterial({
       wireframe: false,
@@ -552,11 +565,7 @@ class ChaseCamera {
 const colorPalette = {
   screenBg: 0x121212,
   ambientLight: 0x777777,
-  // ambientLight: 0xffff00,
-  // directionalLight: 0xffff00, // yellow
-  // directionalLight: 0xffa500, // orange
-  // directionalLight: 0xff0000, // red
-  directionalLight: 0xffffff, // white
+  directionalLight: 0xffffff,
 };
 
 const getRandomNum = (max = 0, min = 0) =>
@@ -622,6 +631,7 @@ const render = () => {
   /* renderer
                                                       ------------------------------------ */
   renderer.render(scene, chaseCamera.camera);
+  composer.render();
 
   requestAnimationFrame(render);
 };
@@ -659,7 +669,7 @@ scene.add(escaper.mesh);
 /* chaser
                            -------------------------------------------------------------*/
 chaserGroup = new THREE.Group();
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 200; i++) {
   const chaser = new Chaser();
   chaser.mesh.geometry.computeBoundingSphere();
   chasers.push(chaser);
@@ -669,7 +679,7 @@ scene.add(chaserGroup);
 
 /* dustParticles
                           -------------------------------------------------------------*/
-const dustParticles = new DustParticles(150);
+const dustParticles = new DustParticles(200);
 dustParticles.wrap.children.forEach((dust) => {
   dust.geometry.computeBoundingSphere();
 });
@@ -706,16 +716,30 @@ scene.add(directionalLight);
 // postprocessing
 
 composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
+composer.addPass(new RenderPass(scene, chaseCamera.camera));
 
-var effect = new ShaderPass(DotScreenShader);
-effect.uniforms["scale"].value = 4;
+// var effect = new ShaderPass(DotScreenShader);
+// effect.uniforms["scale"].value = 5;
+// composer.addPass(effect);
+
+var effect = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  1.5,
+  0.4,
+  0.85
+);
+effect.threshold = 0.15;
+effect.exposure = 1.3;
+effect.strength = 3;
+effect.radius = 0.2;
 composer.addPass(effect);
 
 var effect = new ShaderPass(RGBShiftShader);
-effect.uniforms["amount"].value = 0.0015;
+effect.uniforms["amount"].value = 0.002;
 composer.addPass(effect);
-
+// var effect = new AfterimagePass();
+// effect.uniforms["damp"].value = 0.85;
+// composer.addPass(effect);
 //
 
 /* resize

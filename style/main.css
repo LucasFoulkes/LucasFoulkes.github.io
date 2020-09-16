@@ -3,6 +3,8 @@ body {
   font-family: "Roboto Mono", monospace;
   background: #121212;
   overflow: hidden;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 #logo {
@@ -74,4 +76,55 @@ nav a:nth-child(2):hover {
 span {
   background: white !important;
   opacity: 0.5;
+}
+
+/* @font-face {
+  font-family: neon;
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+} */
+
+.WebGL-output {
+  z-index: -1;
+  text-align: center;
+  position: relative;
+}
+
+@font-face {
+  font-family: "neontubes";
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot");
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff2")
+      format("woff2"),
+    url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff")
+      format("woff"),
+    url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.section1Wrapper {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centeredTop {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.neon {
+  font-family: neontubes;
+  color: white;
+  text-align: center;
 }
